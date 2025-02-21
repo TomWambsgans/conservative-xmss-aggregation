@@ -1,0 +1,29 @@
+[package]
+name = "conservative-xmss-aggregation"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+binius_core = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
+binius_field = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
+binius_math = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
+binius_hal = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
+binius_hash = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
+binius_circuits = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
+# binius_macros = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
+# binius_utils = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
+
+bumpalo = { version = "3.17.0", features = ["collections"] }
+tiny-keccak = "*"
+rand = "0.9.0"
+rand_chacha = "0.9.0"
+bytemuck = "1.21.0"
+itertools = "0.14.0"
+array-init = "2.1.0"
+rayon = "1.8.0"
+groestl_crypto = { package = "groestl", version = "0.10.1" }
+keccak = "0.1.5"
+bytesize = "1.3.2"
+
+[profile.release]
+lto = "fat"
