@@ -64,18 +64,13 @@ NS * XMSS_HEIGHT
 - flip: 1-bit
 - pre_hash_left: 4 x 8-bytes
 - pre_hash_right: 4 x 8-bytes
-- pre_hash_main: 4 x 8-bytes
-- pre_hash_aux: 4 x 8-bytes
+- pre_hash_main: 4 x 8-bytes (virtual column, = (1 - flip) . pre_hash_left + flip . pre_hash_right)
+- pre_hash_aux: 4 x 8-bytes (virtual column, = (1 - flip) . pre_hash_right + flip . pre_hash_left)
 - hash: 4 x 8-bytes
 - keccak_truncated_bits: 21 x 8-bytes
 - signature_index: 2-bytes
 - xmss_depth: 1-byte
 - next_xmss_depth: 1-byte (virtual column = xmss_depth x generator8)
-
-#### Constraints:
-
-pre_hash_main = (1 - flip) . pre_hash_left + flip . pre_hash_right
-pre_hash_aux = (1 - flip) . pre_hash_right + flip . pre_hash_left
 
 #### Flushing rules
 
@@ -97,7 +92,7 @@ NS * [WOTS_CHUNKS * (2^W - 1) - WOTS_FIXED_SUM] (Sum of the number of hash requi
 - keccak_truncated_bits: 21 x 8-bytes 
 - signature_index: 2-bytes
 - chain_length 2-bytes
-- next_chain_length: 2-bytes (virtual column = chain_length * generator16)
+- (next_chain_length): 2-bytes (virtual column = chain_length * generator16)
 - wots_chunk_index: 1-byte
 
 #### Flushing rules

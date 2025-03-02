@@ -219,7 +219,7 @@ checksum = "8c3c1a368f70d6cf7302d78f8f7093da241fb8e8807c05cc9e51a125895a6d5b"
 [[package]]
 name = "binius_circuits"
 version = "0.2.0"
-source = "git+https://gitlab.com/IrreducibleOSS/binius?rev=5b0cb1a9#5b0cb1a92e6c93e1a7ee236f4daa0b9203fe552a"
+source = "git+https://github.com/TomWambsgans/binius?branch=composite-oracle#504c16f48d4508047490a234a3c71c6520b03cb8"
 dependencies = [
  "alloy-primitives",
  "anyhow",
@@ -241,7 +241,7 @@ dependencies = [
 [[package]]
 name = "binius_core"
 version = "0.2.0"
-source = "git+https://gitlab.com/IrreducibleOSS/binius?rev=5b0cb1a9#5b0cb1a92e6c93e1a7ee236f4daa0b9203fe552a"
+source = "git+https://github.com/TomWambsgans/binius?branch=composite-oracle#504c16f48d4508047490a234a3c71c6520b03cb8"
 dependencies = [
  "assert_matches",
  "auto_impl",
@@ -272,7 +272,7 @@ dependencies = [
 [[package]]
 name = "binius_field"
 version = "0.2.0"
-source = "git+https://gitlab.com/IrreducibleOSS/binius?rev=5b0cb1a9#5b0cb1a92e6c93e1a7ee236f4daa0b9203fe552a"
+source = "git+https://github.com/TomWambsgans/binius?branch=composite-oracle#504c16f48d4508047490a234a3c71c6520b03cb8"
 dependencies = [
  "binius_maybe_rayon",
  "binius_utils",
@@ -290,7 +290,7 @@ dependencies = [
 [[package]]
 name = "binius_hal"
 version = "0.2.0"
-source = "git+https://gitlab.com/IrreducibleOSS/binius?rev=5b0cb1a9#5b0cb1a92e6c93e1a7ee236f4daa0b9203fe552a"
+source = "git+https://github.com/TomWambsgans/binius?branch=composite-oracle#504c16f48d4508047490a234a3c71c6520b03cb8"
 dependencies = [
  "auto_impl",
  "binius_field",
@@ -308,7 +308,7 @@ dependencies = [
 [[package]]
 name = "binius_hash"
 version = "0.2.0"
-source = "git+https://gitlab.com/IrreducibleOSS/binius?rev=5b0cb1a9#5b0cb1a92e6c93e1a7ee236f4daa0b9203fe552a"
+source = "git+https://github.com/TomWambsgans/binius?branch=composite-oracle#504c16f48d4508047490a234a3c71c6520b03cb8"
 dependencies = [
  "binius_field",
  "binius_ntt",
@@ -326,7 +326,7 @@ dependencies = [
 [[package]]
 name = "binius_macros"
 version = "0.2.0"
-source = "git+https://gitlab.com/IrreducibleOSS/binius?rev=5b0cb1a9#5b0cb1a92e6c93e1a7ee236f4daa0b9203fe552a"
+source = "git+https://github.com/TomWambsgans/binius?branch=composite-oracle#504c16f48d4508047490a234a3c71c6520b03cb8"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -336,7 +336,7 @@ dependencies = [
 [[package]]
 name = "binius_math"
 version = "0.2.0"
-source = "git+https://gitlab.com/IrreducibleOSS/binius?rev=5b0cb1a9#5b0cb1a92e6c93e1a7ee236f4daa0b9203fe552a"
+source = "git+https://github.com/TomWambsgans/binius?branch=composite-oracle#504c16f48d4508047490a234a3c71c6520b03cb8"
 dependencies = [
  "auto_impl",
  "binius_field",
@@ -357,7 +357,7 @@ dependencies = [
 [[package]]
 name = "binius_maybe_rayon"
 version = "0.2.0"
-source = "git+https://gitlab.com/IrreducibleOSS/binius?rev=5b0cb1a9#5b0cb1a92e6c93e1a7ee236f4daa0b9203fe552a"
+source = "git+https://github.com/TomWambsgans/binius?branch=composite-oracle#504c16f48d4508047490a234a3c71c6520b03cb8"
 dependencies = [
  "cfg-if",
  "either",
@@ -367,7 +367,7 @@ dependencies = [
 [[package]]
 name = "binius_ntt"
 version = "0.2.0"
-source = "git+https://gitlab.com/IrreducibleOSS/binius?rev=5b0cb1a9#5b0cb1a92e6c93e1a7ee236f4daa0b9203fe552a"
+source = "git+https://github.com/TomWambsgans/binius?branch=composite-oracle#504c16f48d4508047490a234a3c71c6520b03cb8"
 dependencies = [
  "binius_field",
  "binius_math",
@@ -380,7 +380,7 @@ dependencies = [
 [[package]]
 name = "binius_utils"
 version = "0.2.0"
-source = "git+https://gitlab.com/IrreducibleOSS/binius?rev=5b0cb1a9#5b0cb1a92e6c93e1a7ee236f4daa0b9203fe552a"
+source = "git+https://github.com/TomWambsgans/binius?branch=composite-oracle#504c16f48d4508047490a234a3c71c6520b03cb8"
 dependencies = [
  "auto_impl",
  "binius_maybe_rayon",
@@ -510,6 +510,7 @@ dependencies = [
  "binius_field",
  "binius_hal",
  "binius_hash",
+ "binius_macros",
  "binius_math",
  "bumpalo",
  "bytemuck",

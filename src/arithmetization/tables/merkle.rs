@@ -4,8 +4,8 @@ use binius_circuits::{
     transparent,
 };
 use binius_core::oracle::OracleId;
-use binius_field::{BinaryField, Field, PackedField, TowerField};
-use binius_math::ArithExpr;
+use binius_field::{BinaryField, BinaryField128b, Field, PackedField, TowerField};
+use binius_macros::arith_expr;
 
 use crate::{
     arithmetization::channels::Channels,
@@ -26,8 +26,8 @@ pub struct MerkleTable {
     pub flip: OracleId,                        // 1-bit
     pub pre_hash_left: [OracleId; 4],          // each is 8-bytes
     pub pre_hash_right: [OracleId; 4],         // each is 8-bytes
-    pub pre_hash_main: [OracleId; 4],          // each is 8-bytes
-    pub pre_hash_aux: [OracleId; 4],           // each is 8-bytes
+    pub pre_hash_main: [OracleId; 4],          // each is 8-bytes - virtual
+    pub pre_hash_aux: [OracleId; 4],           // each is 8-bytes - virtual
     pub hash: [OracleId; 4],                   // each is 8-bytes
     pub keccak_truncated_bits: [OracleId; 21], // each is 8-bytes
     pub signature_index: OracleId,             // 2 bytes
@@ -53,27 +53,45 @@ impl super::Table for MerkleTable {
         let count = aggregation_count * XMSS_HEIGHT;
         let n_vars = n_vars_for::<B1>(count);
 
+        let flip = builder.add_committed("flip", n_vars, B1::TOWER_LEVEL);
+
+        let pre_hash_left =
+            builder.add_committed_multiple::<4>("pre_hash_left", n_vars, B64::TOWER_LEVEL);
+
+        let pre_hash_right =
+            builder.add_committed_multiple::<4>("pre_hash_right", n_vars, B64::TOWER_LEVEL);
+
+        let pre_hash_main = array_init::<_, _, 4>(|i| {
+            builder
+                .add_composite(
+                    "pre_hash_main",
+                    n_vars,
+                    [flip, pre_hash_left[i], pre_hash_right[i]],
+                    arith_expr!(BinaryField128b[flip, l, r] = (1 - flip) * l + flip * r),
+                )
+                .unwrap()
+        });
+
+        let pre_hash_aux = array_init::<_, _, 4>(|i| {
+            builder
+                .add_composite(
+                    "pre_hash_aux",
+                    n_vars,
+                    [flip, pre_hash_left[i], pre_hash_right[i]],
+                    arith_expr!(BinaryField128b[flip, l, r] = (1 - flip) * r + flip * l),
+                )
+                .unwrap()
+        });
+
         let xmss_depth = builder.add_committed("xmss_depth", n_vars, B8::TOWER_LEVEL);
         let res = Self {
             count,
             n_vars,
-            flip: builder.add_committed("flip", n_vars, B1::TOWER_LEVEL),
-            pre_hash_left: builder.add_committed_multiple(
-                "pre_hash_left",
-                n_vars,
-                B64::TOWER_LEVEL,
-            ),
-            pre_hash_right: builder.add_committed_multiple(
-                "pre_hash_right",
-                n_vars,
-                B64::TOWER_LEVEL,
-            ),
-            pre_hash_main: builder.add_committed_multiple(
-                "pre_hash_main",
-                n_vars,
-                B64::TOWER_LEVEL,
-            ),
-            pre_hash_aux: builder.add_committed_multiple("pre_hash_aux", n_vars, B64::TOWER_LEVEL),
+            flip,
+            pre_hash_left,
+            pre_hash_right,
+            pre_hash_main,
+            pre_hash_aux,
             hash: builder.add_committed_multiple("hash", n_vars, B64::TOWER_LEVEL),
             keccak_truncated_bits: builder.add_committed_multiple(
                 "keccak_truncated_bits",
@@ -90,28 +108,6 @@ impl super::Table for MerkleTable {
                 )
                 .unwrap(),
         };
-
-        // a: pre_hash_main = (1 - flip) . pre_hash_left + flip . pre_hash_right
-        // b: pre_hash_main = (1 - flip) . pre_hash_left + flip . pre_hash_right
-        for (symbol, arr0, arr1, arr2) in [
-            (
-                "a",
-                res.pre_hash_main,
-                res.pre_hash_left,
-                res.pre_hash_right,
-            ),
-            ("b", res.pre_hash_aux, res.pre_hash_right, res.pre_hash_left),
-        ] {
-            for i in 0..4 {
-                builder.assert_zero(
-                    format!("merkle-table-constraint-{symbol}-{i}"),
-                    [arr0[i], arr1[i], arr2[i], res.flip],
-                    ArithExpr::Var(0)
-                        - ((ArithExpr::Var(3) - ArithExpr::one()) * ArithExpr::Var(1)
-                            + (ArithExpr::Var(3) * (ArithExpr::Var(2)))),
-                );
-            }
-        }
 
         let keccak_padding_0x01 = transparent::constant(
             builder,

@@ -4,13 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-binius_core = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
-binius_field = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
-binius_math = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
-binius_hal = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
-binius_hash = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
-binius_circuits = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
-# binius_macros = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
+binius_core = { git="https://github.com/TomWambsgans/binius", branch = "composite-oracle" }
+binius_field = { git="https://github.com/TomWambsgans/binius", branch = "composite-oracle" }
+binius_math = { git="https://github.com/TomWambsgans/binius", branch = "composite-oracle" }
+binius_hal = { git="https://github.com/TomWambsgans/binius", branch = "composite-oracle" }
+binius_hash = { git="https://github.com/TomWambsgans/binius", branch = "composite-oracle" }
+binius_circuits = { git="https://github.com/TomWambsgans/binius", branch = "composite-oracle" }
+binius_macros = { git="https://github.com/TomWambsgans/binius", branch = "composite-oracle" }
 # binius_utils = { git="https://gitlab.com/IrreducibleOSS/binius", rev = "5b0cb1a9" }
 
 bumpalo = { version = "3.17.0", features = ["collections"] }
